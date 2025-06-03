@@ -8,9 +8,9 @@ import user_management as dbHandler
 # app.logger.critical("message")
 
 app = Flask(__name__)
+app.secret_key = "ctMRZh~R7bUY41rHkN8Sv^N]7[O(Y!SrbP9c9sx_jV}Pe!z'&y"
 
-
-@app.route("/success.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
+@app.route("/success.html", methods=["POST", "GET"])
 def addFeedback():
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
@@ -25,7 +25,7 @@ def addFeedback():
         return render_template("/success.html", state=True, value="Back")
 
 
-@app.route("/signup.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
+@app.route("/signup.html", methods=["POST", "GET"])
 def signup():
     if request.method == "GET" and request.args.get("url"):
         url = request.args.get("url", "")
@@ -40,7 +40,7 @@ def signup():
         return render_template("/signup.html")
 
 
-@app.route("/index.html", methods=["POST", "GET", "PUT", "PATCH", "DELETE"])
+@app.route("/index.html", methods=["POST", "GET"])
 @app.route("/", methods=["POST", "GET"])
 def home():
     if request.method == "GET" and request.args.get("url"):
