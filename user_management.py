@@ -1,5 +1,4 @@
 import sqlite3 as sql
-import sqlite3
 import time
 import random
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -19,6 +18,7 @@ def insertUser(username, password, DoB):
 
 def retrieveUsers(username, password):
     con = sql.connect("database_files/database.db")
+    con.row_factory = sql.Row
     cur = con.cursor()
     cur.execute(f'SELECT * FROM users WHERE username = ?', (username,))
     user = con.execute("SELECT * FROM users WHERE username = ? COLLATE NOCASE", (username,)).fetchone()
@@ -34,18 +34,11 @@ def retrieveUsers(username, password):
             file.write(str(number))
         # Simulate response time of heavy app for testing purposes
         time.sleep(random.randint(80, 90) / 1000)
-        if check_password_hash(user['password'], password):
+        if check_password_hash(user[2], password):
             con.close()
             return True
         else:
             return False
-
-       # if cur.fetchone() == None:
-        #    con.close()
-        #    return False
-       # else:
-       #     con.close()
-       #     return True
 
 
 def insertFeedback(feedback):
